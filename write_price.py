@@ -1,6 +1,6 @@
 import csv
 from private import iap_product_csv
-
+import time
 
 #e.g) com.github.coin.10 => 9.99
 def write_price_from_id() :
@@ -17,6 +17,12 @@ def write_price_from_id() :
 		writer = csv.writer(csv_file)
 		writer.writerows(product_list)
 
+def test():
+	a = time.time()
+	time.sleep(1)
+	b = time.time()
+	print(int(b-a))
 
 
-write_price_from_id()
+#write_price_from_id()
+test()

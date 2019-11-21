@@ -2,23 +2,65 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import csv
 import time
 from private import *
 
 driver = webdriver.Chrome("./chromedriver")
-wait_time_max = WebDriverWait(driver, 60)
+wait_time_max = WebDriverWait(driver, 300)
 
-product_id = "com.test.set.10"
-product_price = "9.99"
-product_title = "Coin Pack"
-product_description = "Coin Pack"
+product_id = ""
+product_price = ""
+product_title = ""
+product_description = ""
+
+run_count = 0
+
+def main():
+	time_start = time.time()
+	product_list = []
+	product_list = get_csv_data()
+	for product in product_list :
+		if product[0] == "Product ID" :
+			print ("CSV Load complete")
+			continue
+		pid = product[0]
+		price = product[6]
+		title = product[4].split("; ",3)[1]
+		description = product[4].split("; ",3)[2]
+		set_product_data(pid, price, title, description)
+		run()
+	time_end = time.time()
+	print("All jobs are done : %dsec"%((int)(time_end-time_start)))
+	
+
+def set_product_data(pid, price, title, description):
+	global product_id
+	global product_price
+	global product_title
+	global product_description
+
+	product_id = pid
+	product_price = price
+	product_title = title
+	product_description = description
+
+def get_csv_data():
+	list_from_csv = []
+	with open("./" + iap_product_csv) as csvfile:
+		reader = csv.reader(csvfile)
+		list_from_csv = list(reader)
+	return list_from_csv
+
 
 def run():
+	global run_count
 	init()
-	pause(message="Please login manually & press ENTER in console") #login manually
+	if run_count == 0 :
+		pause(message="Please login manually & press ENTER in console") #login manually
 	create_add_on()
 	submmit_add_on()
-	init()
+	run_count += 1
 
 def init():
 	driver.get("https://partner.microsoft.com/ko-kr/dashboard/products/" + app_id + "/addons")
@@ -185,4 +227,7 @@ def d_wait_xpath(value):
 def pause(message = "Press ENTER in console to next step"):
 	input(message)
 
-run()
+
+
+
+main()
