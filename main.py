@@ -24,6 +24,8 @@ def main():
 		if product[0] == "Product ID" :
 			print ("CSV Load complete")
 			continue
+		elif product[0] == "" :
+			break
 		pid = product[0]
 		price = product[6]
 		title = product[4].split("; ",3)[1]
@@ -180,7 +182,7 @@ def d_click_id(cid = ''):
 			driver.find_element_by_id(cid).click()
 			break
 		except Exception as ec:
-			print("Fail to click [%s] (%d/%d) %s" %(cid,(wait_sec+1), max_sec, ec))
+			print("*** FAIL TO CLICK [%s] (%d/%d) | %s" %(cid,(wait_sec+1), max_sec, ec))
 			time.sleep(1)
 			wait_sec += 1
 
@@ -194,7 +196,7 @@ def d_click(xpath = ''):
 			driver.find_element_by_xpath(xpath).click()
 			break
 		except Exception as ec:
-			print("Fail to click [%s] (%d/%d) %s" %(xpath,(wait_sec+1), max_sec, ec))
+			print("*** FAIL TO CLICK [%s] (%d/%d) | %s" %(xpath,(wait_sec+1), max_sec, ec))
 			time.sleep(1)
 			wait_sec += 1
 
