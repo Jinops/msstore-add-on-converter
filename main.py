@@ -176,28 +176,33 @@ def d_input(name, value):
 def d_click_id(cid = ''):
 	time.sleep(0.01)
 	d_wait_id(cid)
-	driver.find_element_by_id(cid).click()
+	wait_sec = 0
+	max_sec = 30
+	while (wait_sec < max_sec) :
+		try:
+			driver.find_element_by_id(cid).click()
+			break
+		except Exception as ec:
+			print("Fail to click [%d] (%d/%d) %c" %(cid,(wait_sec+1), max_sec, ec))
+			time.sleep(1)
+			wait_sec += 1
 
 def d_click(xpath = ''):
 	time.sleep(0.01)
 	d_wait_xpath(xpath)
-	driver.find_element_by_xpath(xpath).click()
-
-def d_wait(sec = 10):
-	driver.implicitly_wait(sec)
-
-def d_try_again(d_func):
-	work = None
 	wait_sec = 0
-	max_sec = 5
-	while (wait_sec < max_sec) and (work == None) :
+	max_sec = 30
+	while (wait_sec < max_sec) :
 		try:
-			work = d_func()
-		except:
-			print("fail to load (%d/%d)" %((wait_sec+1), max_sec))
+			driver.find_element_by_xpath(xpath).click()
+			break
+		except Exception as ec:
+			print("Fail to click [%d] (%d/%d) %c" %(cid,(wait_sec+1), max_sec, ec))
 			time.sleep(1)
 			wait_sec += 1
 
+def d_wait(sec = 10):
+	driver.implicitly_wait(sec)
 
 def d_wait_name(value):
 	try:
