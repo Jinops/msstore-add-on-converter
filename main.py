@@ -33,7 +33,7 @@ def main():
 		set_product_data(pid, price, title, description)
 		run()
 	time_end = time.time()
-	print("All jobs are done : %dsec"%((int)(time_end-time_start)))
+	print("All jobs are done : %dsec for %d products"%((int)(time_end-time_start), run_count))
 	
 
 def set_product_data(pid, price, title, description):
@@ -182,7 +182,7 @@ def d_click_id(cid = ''):
 			driver.find_element_by_id(cid).click()
 			break
 		except Exception as ec:
-			print("*** FAIL TO CLICK [%s] (%d/%d) | %s" %(cid,(wait_sec+1), max_sec, ec))
+			print("*** FAIL TO CLICK [%s] (%d/%d retry) | %s" %(cid,(wait_sec+1), max_sec, ec))
 			time.sleep(1)
 			wait_sec += 1
 
@@ -196,7 +196,7 @@ def d_click(xpath = ''):
 			driver.find_element_by_xpath(xpath).click()
 			break
 		except Exception as ec:
-			print("*** FAIL TO CLICK [%s] (%d/%d) | %s" %(xpath,(wait_sec+1), max_sec, ec))
+			print("*** FAIL TO CLICK [%s] (%d/%d retry) | %s" %(xpath,(wait_sec+1), max_sec, ec))
 			time.sleep(1)
 			wait_sec += 1
 
