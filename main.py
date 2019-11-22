@@ -17,6 +17,7 @@ product_description = ""
 run_count = 0
 
 def main():
+	print("Start time : %dsec"%((int)(time_end-time_start)))
 	time_start = time.time()
 	product_list = []
 	product_list = get_csv_data()
@@ -183,7 +184,7 @@ def d_click_id(cid = ''):
 			driver.find_element_by_id(cid).click()
 			break
 		except Exception as ec:
-			print("Fail to click [%d] (%d/%d) %c" %(cid,(wait_sec+1), max_sec, ec))
+			print("Fail to click [%s] (%d/%d) %s" %(cid,(wait_sec+1), max_sec, ec))
 			time.sleep(1)
 			wait_sec += 1
 
@@ -197,7 +198,7 @@ def d_click(xpath = ''):
 			driver.find_element_by_xpath(xpath).click()
 			break
 		except Exception as ec:
-			print("Fail to click [%d] (%d/%d) %c" %(xpath,(wait_sec+1), max_sec, ec))
+			print("Fail to click [%s] (%d/%d) %s" %(xpath,(wait_sec+1), max_sec, ec))
 			time.sleep(1)
 			wait_sec += 1
 
