@@ -197,7 +197,7 @@ def d_click(xpath = ''):
 			driver.find_element_by_xpath(xpath).click()
 			break
 		except Exception as ec:
-			print("Fail to click [%d] (%d/%d) %c" %(cid,(wait_sec+1), max_sec, ec))
+			print("Fail to click [%d] (%d/%d) %c" %(xpath,(wait_sec+1), max_sec, ec))
 			time.sleep(1)
 			wait_sec += 1
 
