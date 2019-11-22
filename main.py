@@ -7,7 +7,7 @@ import time
 from private import *
 
 driver = webdriver.Chrome("./chromedriver")
-wait_time_max = WebDriverWait(driver, 300)
+wait_time_max = WebDriverWait(driver, 10)
 
 product_id = ""
 product_price = ""
@@ -17,7 +17,6 @@ product_description = ""
 run_count = 0
 
 def main():
-	print("Start time : %dsec"%((int)(time_end-time_start)))
 	time_start = time.time()
 	product_list = []
 	product_list = get_csv_data()
@@ -97,8 +96,7 @@ def submission_save_property():
 	d_wait()
 	#Radio : Properties
 	d_click(xpath='//*[@id="appSubmissionAppPropertiesLink"]')
-	d_wait()
-	time.sleep(1)
+	d_wait_page_change()
 	#Dropdown : Content type - Online data storage/services
 	d_click(xpath='//*[@id="ContentType"]//option[@value="OnlineDataStorage"]')
 	#Input : Privacy policy URL%d
@@ -114,8 +112,7 @@ def submission_save_pricing():
 	d_wait()
 	#Radio : Pricing and availability
 	d_click(xpath='//*[@id="Availability"]/div/div/div[1]/a/h3')
-	d_wait()
-	time.sleep(1)
+	d_wait_page_change()
 	#Radio : Visibility - Hidden in the Microsoft Store
 	d_click(xpath='//*[@id="visibility-selection"]/div[2]/div[2]/div[2]/label/span')
 	#Dropdown : Pricing - Base price
@@ -140,8 +137,7 @@ def submission_store_listings():
 	d_wait()
 	#Button : Store listings - Add/remove langueages
 	d_click_id(cid='appSubmissionAppDescription_ManageLanguages')
-	d_wait()
-	time.sleep(1)
+	d_wait_page_change()
 	#Button : Manage languages
 	d_click_id(cid='languageModalLink')
 	#Checkbox : English
@@ -210,6 +206,7 @@ def d_wait_name(value):
 		element = wait_time_max.until(EC.presence_of_element_located((By.NAME, value)))
 	except:
 		print("*** TIME OUT : " + value)
+		d_wait_name(value)
 	d_wait(2)
 
 
@@ -218,6 +215,7 @@ def d_wait_id(value):
 		element = wait_time_max.until(EC.element_to_be_clickable((By.ID, value)))
 	except:
 		print("*** TIME OUT : " + value)
+		d_wait_id(value)
 	d_wait(2)
 
 
@@ -226,7 +224,18 @@ def d_wait_xpath(value):
 		element = wait_time_max.until(EC.element_to_be_clickable((By.XPATH, value)))
 	except:
 		print("*** TIME OUT : " + value)
+		d_wait_xpath(value)
 	d_wait(2)
+
+def d_wait_page_change():
+	try:
+		d_wait()
+		time.sleep(0.01)
+	except:
+		print("*** TIME OUT : d_wait_page_change")
+		driver.navigate().refresh()
+		d_wait_page_change()
+
 
 
 
