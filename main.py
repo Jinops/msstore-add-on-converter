@@ -5,7 +5,8 @@ from selenium.webdriver.support import expected_conditions as EC
 import csv
 import time
 from private import *
-
+#TODO1 : languageModalLink, Title 직전에서 강제 쿨타임 필요할 듯 (클릭이 들어가도 로딩이 덜됬는지 이동을 안하는 경우가 있음)
+#TODO2 : 화면 이동한 직후 retry 여러 번 실패 시 새로고침 하도록 (간혹 페이지 이동은 했으나 스토어 자체적으로 fail뜨는 경우가 있음)
 driver = webdriver.Chrome("./chromedriver")
 wait_time_max = WebDriverWait(driver, 10)
 

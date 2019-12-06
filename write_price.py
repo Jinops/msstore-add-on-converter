@@ -13,16 +13,7 @@ def write_price_from_id() :
 			if (product[6] == ""):
 				product[6] = (float(product[0].rsplit('.',1)[1])-0.01)
 
-	with open("./" + iap_product_csv, 'w') as csv_file:	
-		writer = csv.writer(csv_file)
+	with open("./" + iap_product_csv, 'w') as csv_file:		writer = csv.writer(csv_file)
 		writer.writerows(product_list)
 
-def test():
-	a = time.time()
-	time.sleep(1)
-	b = time.time()
-	print(int(b-a))
-
-
-#write_price_from_id()
-test()
+write_price_from_id()
